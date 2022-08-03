@@ -47,7 +47,7 @@ pkgs-hash "b39924fc7764c08ae3b51beef9a3518c414cdb7d"
 
 **Args:** Path `path`.
 
-**Description:** Retrieves the root `nixpkgs` in the `flake.lock` found at the given `path`. Throws an error if neither is given.
+**Description:** Retrieves the root `nixpkgs` in the `flake.lock` found at the given `path`.
 
 **Examples:**
 
