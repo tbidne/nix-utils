@@ -38,8 +38,9 @@
       pkgs-hash-or-flake = input:
         if input ? hash && input.hash != null
         then pkgs-hash input.hash
-        else if input ? flake-path && input.flake-path != null
-        then pkgs-flake input.flake-path
-        else throw "hash-or-flake: One of hash or flake-path must be defined and non-null";
+        else
+          if input ? flake-path && input.flake-path != null
+          then pkgs-flake input.flake-path
+          else throw "hash-or-flake: One of hash or flake-path must be defined and non-null";
     };
 }
