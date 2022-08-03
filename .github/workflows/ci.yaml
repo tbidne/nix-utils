@@ -34,10 +34,10 @@ jobs:
         run: nix-shell test/pkgs-flake.nix --command exit
 
       - name: pkgs-hash-or-flake hash
-        run: nix-shell test/pkgs-hash-or-flake.nix --argstr test hash --command exit
+        run: nix-shell test/pkgs-hash-or-flake.nix --arg use-hash true --command exit
 
       - name: pkgs-hash-or-flake flake
-        run: nix-shell test/pkgs-hash-or-flake.nix --argstr test flake --command exit
+        run: nix-shell test/pkgs-hash-or-flake.nix --arg use-hash false --command exit
 
       - name: Formatting
         run: nix run github:tbidne/nix-hs-tools/0.6.1#nixpkgs-fmt -- --check
