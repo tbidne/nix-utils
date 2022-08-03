@@ -2,7 +2,7 @@
 
 # Nix Utils
 
-[![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/tbidne/nix-utils?include_prereleases&sort=semver)](https://github.com/tbidne/nix-utils/releases/)
+[![GitHub release (latest SemVer)](https://img.shields.io/github/v/tag/tbidne/nix-utils?include_prereleases&sort=semver)](https://github.com/tbidne/nix-utils/releases/)
 [![MIT](https://img.shields.io/github/license/tbidne/nix-utils?color=blue)](https://opensource.org/licenses/MIT)
 [![build](https://img.shields.io/github/workflow/status/tbidne/nix-utils/ci/main)](https://github.com/tbidne/nix-utils/actions/workflows/ci.yaml)
 
