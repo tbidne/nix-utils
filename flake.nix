@@ -1,7 +1,11 @@
 {
   description = "Nix Utils";
+  inputs.flake-compat = {
+    url = "github:edolstra/flake-compat";
+    flake = false;
+  };
   outputs =
-    { self }:
+    { flake-compat, self }:
     let
       flake-hash = path:
         let
