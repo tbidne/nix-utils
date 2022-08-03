@@ -26,6 +26,18 @@ jobs:
 
       - name: Nix check
         run: nix flake check
-      
+
+      - name: pkgs-hash
+        run: nix-shell test/pkgs-hash.nix --command exit
+
+      - name: pkgs-flake
+        run: nix-shell test/pkgs-flake.nix --command exit
+
+      - name: pkgs-hash-or-flake hash
+        run: nix-shell test/pkgs-hash-or-flake.nix --argstr test hash --command exit
+
+      - name: pkgs-hash-or-flake flake
+        run: nix-shell test/pkgs-hash-or-flake.nix --argstr test flake --command exit
+
       - name: Formatting
         run: nix run github:tbidne/nix-hs-tools/0.6.1#nixpkgs-fmt -- --check
