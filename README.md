@@ -20,34 +20,51 @@
 
 ## pkgs-hash-or-flake
 
-**Args:** attr set containing a string `hash` and/or a path `flake-path` to `flake.lock`.
+**Args:** Attr set containing up to:
 
-**Description:** If `hash` is present and non-null, returns the `nixpkgs` corresponding to this hash. Otherwise returns the root `nixpkgs` in the `flake.lock` found at the given `flake-path`. Throws an error if neither is given.
+* String `hash`
+* String `sha256`
+* Path `flake-path` to `flake.lock`
+
+**Description:** If `hash` is present and non-null, returns the `nixpkgs` corresponding to this hash. The optional `sha256` is the expected value for this `nixpkgs`. Otherwise returns the root `nixpkgs` in the `flake.lock` found at the given `flake-path`. Throws an error if neither is given.
 
 **Examples:**
 ```nix
 pkgs-hash-or-flake { hash = "b39924fc7764c08ae3b51beef9a3518c414cdb7d"; }
+
+pkgs-hash-or-flake {
+  hash = "b39924fc7764c08ae3b51beef9a3518c414cdb7d";
+  sha256 = "1yivdc9k1qcr29yxq9pz4qs2i29wgxj5y550kp0lz2wzp45ksi1x";
+}
 
 pkgs-hash-or-flake { flake-path = ./flake.lock; }
 ```
 
 ## pkgs-hash
 
-**Args:** String `hash`.
+**Args:** Attr set containing:
 
-**Description:** Retrieves the `nixpkgs` corresponding to the given hash.
+* String `hash`
+* String `sha256` (optional)
+
+**Description:** Retrieves the `nixpkgs` corresponding to the given hash. The optional `sha256` is the expected value for this `nixpkgs`.
 
 **Examples:**
 
 ```nix
-pkgs-hash "b39924fc7764c08ae3b51beef9a3518c414cdb7d"
+pkgs-hash {hash = "b39924fc7764c08ae3b51beef9a3518c414cdb7d"; }
+
+pkgs-hash {
+  hash = "b39924fc7764c08ae3b51beef9a3518c414cdb7d";
+  sha256 = "1yivdc9k1qcr29yxq9pz4qs2i29wgxj5y550kp0lz2wzp45ksi1x";
+}
 ```
 
 ## pkgs-flake
 
-**Args:** Path `path`.
+**Args:** Path.
 
-**Description:** Retrieves the root `nixpkgs` in the `flake.lock` found at the given `path`.
+**Description:** Retrieves the root `nixpkgs` in the `flake.lock` found at the given path.
 
 **Examples:**
 
