@@ -14,7 +14,7 @@ let
     { key = "system"; val = if with-system then system else null; }
   ];
 
-  inputs = add-non-nulls { inherit hash; } others;
+  inputs = add-non-nulls ({ inherit hash; }) others;
 
   pkgs = (import ../default.nix).pkgs-hash inputs;
 in
