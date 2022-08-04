@@ -28,7 +28,7 @@
 * String `hash`
 * Path `flake-path` to `flake.lock`
 * String `sha256` (optional)
-* String `system` (optional)
+* Attr set `extra` (optional)
 
 **Description:** If `hash` is present and non-null, returns the `nixpkgs` corresponding to this hash. The optional `sha256` is the expected value for this `nixpkgs`. Otherwise returns the root `nixpkgs` in the `flake.lock` found at the given `flake-path`. Throws an error if neither is given.
 
@@ -39,7 +39,7 @@ pkgs-hash-or-flake { hash = "b39924fc7764c08ae3b51beef9a3518c414cdb7d"; }
 pkgs-hash-or-flake {
   hash = "b39924fc7764c08ae3b51beef9a3518c414cdb7d";
   sha256 = "1yivdc9k1qcr29yxq9pz4qs2i29wgxj5y550kp0lz2wzp45ksi1x";
-  system = "x86_64-linux";
+  extra = {};
 }
 
 pkgs-hash-or-flake { flake-path = ./flake.lock; }
@@ -51,7 +51,7 @@ pkgs-hash-or-flake { flake-path = ./flake.lock; }
 
 * String `hash`
 * String `sha256` (optional)
-* String `system` (optional)
+* Attr set `extra` (optional)
 
 **Description:** Retrieves the `nixpkgs` corresponding to the given hash. The optional `sha256` is the expected value for this `nixpkgs`.
 
@@ -67,7 +67,7 @@ pkgs-hash {
 
 pkgs-hash {
   hash = "b39924fc7764c08ae3b51beef9a3518c414cdb7d";
-  system = "x86_64-linux";
+  extra = {};
 }
 ```
 
@@ -76,7 +76,7 @@ pkgs-hash {
 **Args:** Attr set containing:
 
 * Path `flake-hash`
-* String `system` (optional)
+* Attr set `extra` (optional)
 
 **Description:** Retrieves the root `nixpkgs` in the `flake.lock` found at the given path.
 
@@ -87,7 +87,7 @@ pkgs-flake { flake-path = ./flake.lock; }
 
 pkgs-flake {
   flake-path = ./flake.lock;
-  system = "x86_64-linux";
+  extra = {};
 }
 ```
 

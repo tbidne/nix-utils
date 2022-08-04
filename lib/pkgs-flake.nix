@@ -1,5 +1,5 @@
 { flake-path
-, system ? null
+, extra ? {}
 }:
 
 let
@@ -15,4 +15,4 @@ import
     url = "https://github.com/NixOS/nixpkgs/archive/${flake-hash}.tar.gz";
     sha256 = flake-sha256;
   })
-  (add-non-null { } "system" system)
+  extra

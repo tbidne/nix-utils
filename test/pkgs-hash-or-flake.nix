@@ -1,6 +1,5 @@
 { use-hash ? true
 , with-sha ? false
-, with-system ? false
 }:
 
 let
@@ -9,7 +8,6 @@ let
   hash = "b39924fc7764c08ae3b51beef9a3518c414cdb7d";
   flake-path = ./test-flake.lock;
   sha = "1yivdc9k1qcr29yxq9pz4qs2i29wgxj5y550kp0lz2wzp45ksi1x";
-  system = "x86_64-linux";
 
   base =
     if use-hash
@@ -18,7 +16,6 @@ let
 
   others = [
     { key = "sha256"; val = if with-sha then sha else null; }
-    { key = "system"; val = if with-system then system else null; }
   ];
 
   inputs = add-non-nulls base others;

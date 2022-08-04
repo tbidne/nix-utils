@@ -1,7 +1,7 @@
 { hash ? null
 , sha256 ? null
 , flake-path ? null
-, system ? null
+, extra ? {}
 }:
 
 let
@@ -9,5 +9,5 @@ let
   pkgs-flake = import ./pkgs-flake.nix;
 in
 if hash != null
-then pkgs-hash { inherit hash sha256 system; }
-else pkgs-flake { inherit flake-path system; }
+then pkgs-hash { inherit hash sha256 extra; }
+else pkgs-flake { inherit flake-path extra; }
