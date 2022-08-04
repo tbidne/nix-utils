@@ -11,20 +11,24 @@
 ---
 
 ### Table of Contents
-* [Functions](#functions)
+* [Nixpkgs Utils](#nixpkgs-utils)
   * [pkgs-hash-or-flake](#pkgs-hash-or-flake)
   * [pkgs-hash](#pkgs-hash)
   * [pkgs-flake](#pkgs-flake)
+* [Null Utils](#null-utils)
+  * [add-non-null](#add-non-null)
+  * [add-non-nulls](#add-non-nulls)
 
-# Functions
+# Nixpkgs Utils
 
 ## pkgs-hash-or-flake
 
 **Args:** Attr set containing up to:
 
 * String `hash`
-* String `sha256`
 * Path `flake-path` to `flake.lock`
+* String `sha256` (optional)
+* String `system` (optional)
 
 **Description:** If `hash` is present and non-null, returns the `nixpkgs` corresponding to this hash. The optional `sha256` is the expected value for this `nixpkgs`. Otherwise returns the root `nixpkgs` in the `flake.lock` found at the given `flake-path`. Throws an error if neither is given.
 
@@ -35,6 +39,7 @@ pkgs-hash-or-flake { hash = "b39924fc7764c08ae3b51beef9a3518c414cdb7d"; }
 pkgs-hash-or-flake {
   hash = "b39924fc7764c08ae3b51beef9a3518c414cdb7d";
   sha256 = "1yivdc9k1qcr29yxq9pz4qs2i29wgxj5y550kp0lz2wzp45ksi1x";
+  system = "x86_64-linux";
 }
 
 pkgs-hash-or-flake { flake-path = ./flake.lock; }
@@ -46,28 +51,80 @@ pkgs-hash-or-flake { flake-path = ./flake.lock; }
 
 * String `hash`
 * String `sha256` (optional)
+* String `system` (optional)
 
 **Description:** Retrieves the `nixpkgs` corresponding to the given hash. The optional `sha256` is the expected value for this `nixpkgs`.
 
 **Examples:**
 
 ```nix
-pkgs-hash {hash = "b39924fc7764c08ae3b51beef9a3518c414cdb7d"; }
+pkgs-hash { hash = "b39924fc7764c08ae3b51beef9a3518c414cdb7d"; }
 
 pkgs-hash {
   hash = "b39924fc7764c08ae3b51beef9a3518c414cdb7d";
   sha256 = "1yivdc9k1qcr29yxq9pz4qs2i29wgxj5y550kp0lz2wzp45ksi1x";
 }
+
+pkgs-hash {
+  hash = "b39924fc7764c08ae3b51beef9a3518c414cdb7d";
+  system = "x86_64-linux";
+}
 ```
 
 ## pkgs-flake
 
-**Args:** Path.
+**Args:** Attr set containing:
+
+* Path `flake-hash`
+* String `system` (optional)
 
 **Description:** Retrieves the root `nixpkgs` in the `flake.lock` found at the given path.
 
 **Examples:**
 
 ```nix
-pkgs-flake ./flake.lock
+pkgs-flake { flake-path = ./flake.lock; }
+
+pkgs-flake {
+  flake-path = ./flake.lock;
+  system = "x86_64-linux";
+}
+```
+
+# Null Utils
+
+## add-non-null
+
+**Args:**
+
+* Attr set
+* String key
+* Arbitrary value
+
+**Description:** If the value is non-null, adds the key/value pair to the attr set. Otherwise returns the original attrs.
+
+**Examples:**
+
+```nix
+nix-repl> add-non-null { a = "a"; } "some-key" null
+{ a = "a"; }
+
+nix-repl> add-non-null { a = "a"; } "some-key" 6
+{ a = "a"; some-key = 6; }
+```
+
+## add-non-nulls
+
+**Args:**
+
+* Attr set
+* List of key/value pairs
+
+**Description:** Adds all non-null valued key/value pairs to the attr set.
+
+**Examples:**
+
+```nix
+nix-repl> add-non-nulls { a = "a"; } [ { key = "null-val"; val = null; } { key = "five"; val = 5; } ]
+{ a = "a"; five = 5; }
 ```

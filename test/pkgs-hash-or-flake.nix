@@ -1,22 +1,30 @@
 { use-hash ? true
 , with-sha ? false
+, with-system ? false
 }:
 
 let
-  hash-set = { hash = "b39924fc7764c08ae3b51beef9a3518c414cdb7d"; };
-  sha-set = { sha256 = "1yivdc9k1qcr29yxq9pz4qs2i29wgxj5y550kp0lz2wzp45ksi1x"; };
-  pkgs-hash =
-    if with-sha
-    then hash-set // sha-set
-    else hash-set;
+  add-non-nulls = (import ../lib/null-utils.nix).add-non-nulls;
 
-  pkgs-flake = { flake-path = ./test-flake.lock; };
+  hash = "b39924fc7764c08ae3b51beef9a3518c414cdb7d";
+  flake-path = ./test-flake.lock;
 
-  input =
+  sha = "1yivdc9k1qcr29yxq9pz4qs2i29wgxj5y550kp0lz2wzp45ksi1x";
+  system = "x86_64-linux";
+
+  base =
     if use-hash
-    then pkgs-hash
-    else pkgs-flake;
+    then { inherit hash; }
+    else { inherit flake-path; };
 
-  pkgs = (import ../default.nix).pkgs-hash-or-flake input;
+  others = [
+    { key = "hash"; val = if use-hash then hash else null; }
+    { key = "sha256"; val = if with-sha then sha else null; }
+    { key = "system"; val = if with-system then system else null; }
+  ];
+
+  inputs = add-non-nulls base others;
+
+  pkgs = (import ../default.nix).pkgs-hash-or-flake inputs;
 in
 pkgs.mkShell { }

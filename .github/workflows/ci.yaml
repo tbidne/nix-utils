@@ -33,17 +33,29 @@ jobs:
       - name: pkgs-hash with sha
         run: nix-shell test/pkgs-hash.nix --arg with-sha true --command exit
 
+      - name: pkgs-hash with system
+        run: nix-shell test/pkgs-hash.nix --arg with-system true --command exit
+
       - name: pkgs-flake
         run: nix-shell test/pkgs-flake.nix --command exit
 
+      - name: pkgs-flake with system
+        run: nix-shell test/pkgs-flake.nix --arg with-system true --command exit
+
       - name: pkgs-hash-or-flake hash
-        run: nix-shell test/pkgs-hash-or-flake.nix --arg use-hash true --command exit
+        run: nix-shell test/pkgs-hash-or-flake.nix --command exit
 
       - name: pkgs-hash-or-flake hash with sha
-        run: nix-shell test/pkgs-hash-or-flake.nix --arg use-hash true --arg with-sha true --command exit
+        run: nix-shell test/pkgs-hash-or-flake.nix --arg with-sha true --command exit
+
+      - name: pkgs-hash-or-flake hash with system
+        run: nix-shell test/pkgs-hash-or-flake.nix --arg with-system true --command exit
 
       - name: pkgs-hash-or-flake flake
         run: nix-shell test/pkgs-hash-or-flake.nix --arg use-hash false --command exit
+
+      - name: pkgs-hash-or-flake flake with system
+        run: nix-shell test/pkgs-hash-or-flake.nix --arg use-hash false --arg with-system true --command exit
 
       - name: Formatting
         run: nix run github:tbidne/nix-hs-tools/0.6.1#nixpkgs-fmt -- --check
