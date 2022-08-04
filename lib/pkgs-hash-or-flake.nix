@@ -1,7 +1,7 @@
 { hash ? null
 , sha256 ? null
 , flake-path ? null
-, extra ? {}
+, extra ? { }
 }:
 
 let

@@ -1,6 +1,6 @@
 { hash
 , sha256 ? null
-, extra ? {}
+, extra ? { }
 }:
 let
   add-non-null = (import ./null-utils.nix).add-non-null;

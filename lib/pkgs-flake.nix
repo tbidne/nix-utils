@@ -1,5 +1,5 @@
 { flake-path
-, extra ? {}
+, extra ? { }
 }:
 
 let
